@@ -72,13 +72,9 @@ describe("API Empleados", () => {
         }
     });
 
-    it("DELETE /api/empleados/prueba → debe eliminar un empleado por ID", async () => {
-        const res = await request(app).delete(`/api/empleados/123456`);
-
-        expect(res.status).to.be.oneOf([200, 204]);
-        // si devuelves mensaje, valida así:
-        if (res.body.message) {
-            expect(res.body).to.have.property("message").that.includes("eliminado");
-        }
+    it("DELETE /api/empleados/:id (400) → ID inválido (no ObjectId)", async () => {
+        const res = await request(app).delete("/api/empleados/prueba");
+        expect(res.status).to.equal(400);
+        // si usas el middleware, el body sería { error: 'ID inválido' }
     });
 });
